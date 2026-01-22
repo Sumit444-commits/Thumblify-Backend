@@ -12,13 +12,7 @@ import MongoStore from "connect-mongo";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(
-  cors({
-    credentials: true,
-  }),
-);
-
-app.set("trust proxy", 1);
+app.use(cors());
 
 app.use(
   session({
@@ -26,11 +20,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // one week 
-      // httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      // path: "/",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // one week
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
