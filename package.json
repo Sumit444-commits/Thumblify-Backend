@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "bytez": "^0.7.0",
     "bytez.js": "^3.0.0",
     "cloudinary": "^2.9.0",
     "connect-mongo": "^6.0.0",
