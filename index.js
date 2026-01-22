@@ -1,3 +1,11 @@
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('CRITICAL UNHANDLED REJECTION:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('CRITICAL UNCAUGHT EXCEPTION:', err);
+});
+
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
@@ -51,11 +59,20 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-  connectDB().then(() => {
-    app.listen(port, () => {
-      console.log(`Server running on port: ${port}`);
-    });
-  });
+// Remove the old if/else block and replace with this:
+const startServer = async () => {
+  try {
+    await connectDB();
+    if (process.env.NODE_ENV !== "production") {
+      app.listen(port, () => {
+        console.log(`Server running on port: ${port}`);
+      });
+    }
+  } catch (err) {
+    console.error("Failed to start server:", err);
+  }
+};
 
-// THIS IS THE MOST IMPORTANT LINE FOR VERCEL
+startServer();
+
 export default app;
